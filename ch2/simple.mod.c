@@ -1,10 +1,14 @@
+#include <linux/build-salt.h>
 #include <linux/module.h>
 #include <linux/vermagic.h>
 #include <linux/compiler.h>
 
-MODULE_INFO(vermagic, VERMAGIC_STRING);
+BUILD_SALT;
 
-struct module __this_module
+MODULE_INFO(vermagic, VERMAGIC_STRING);
+MODULE_INFO(name, KBUILD_MODNAME);
+
+__visible struct module __this_module
 __attribute__((section(".gnu.linkonce.this_module"))) = {
 	.name = KBUILD_MODNAME,
 	.init = init_module,
@@ -14,13 +18,9 @@ __attribute__((section(".gnu.linkonce.this_module"))) = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-static const struct modversion_info ____versions[]
-__used
-__attribute__((section("__versions"))) = {
-	{ 0x28950ef1, __VMLINUX_SYMBOL_STR(module_layout) },
-	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
-	{ 0xbdfb6dbb, __VMLINUX_SYMBOL_STR(__fentry__) },
-};
+#ifdef CONFIG_RETPOLINE
+MODULE_INFO(retpoline, "Y");
+#endif
 
 static const char __module_depends[]
 __used
@@ -28,11 +28,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "E81BCEC96E3E4C7FAAD74C4");
-MODULE_INFO(rhelversion, "7.6");
-#ifdef RETPOLINE
-	MODULE_INFO(retpoline, "Y");
-#endif
-#ifdef CONFIG_MPROFILE_KERNEL
-	MODULE_INFO(mprofile, "Y");
-#endif
+MODULE_INFO(srcversion, "AF7E3E82C0150D4E5E43A46");
